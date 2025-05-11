@@ -1,0 +1,143 @@
+.formContainer {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: slideUp 0.6s ease-out;
+}
+
+.title {
+  text-align: center;
+  color: #5a3d8a;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #5a3d8a;
+  margin-left: 0.5rem;
+}
+
+.input {
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #e0d6ff;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.input:focus {
+  outline: none;
+  border-color: #9d7aff;
+  box-shadow: 0 0 0 3px rgba(157, 122, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.input::placeholder {
+  color: #b8b0d0;
+}
+
+.submitButton {
+  background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+}
+
+.submitButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+.error {
+  color: #ff4757;
+  background-color: rgba(255, 71, 87, 0.1);
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  border-left: 4px solid #ff4757;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-5px);
+  }
+  40%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Мобильная адаптация */
+@media (max-width: 600px) {
+  .formContainer {
+    padding: 1.5rem;
+    margin: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.7rem;
+  }
+  
+  .form {
+    gap: 1.2rem;
+  }
+}
