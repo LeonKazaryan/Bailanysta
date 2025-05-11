@@ -22,13 +22,18 @@ const Feed = ({ token }: FeedProps) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get("http://localhost:3000/posts");
+      const response = await axios.get(
+        "https://bailanysta-nu.vercel.app/posts"
+      );
       //реверс чтобы посты отоборажались в правильном порядке
       setPosts(response.data.reverse());
       if (token) {
-        const userResponse = await axios.get("http://localhost:3000/me", {
-          headers: { Authorization: token },
-        });
+        const userResponse = await axios.get(
+          "https://bailanysta-nu.vercel.app/me",
+          {
+            headers: { Authorization: token },
+          }
+        );
         setUsername(userResponse.data.username);
       }
     };
@@ -40,7 +45,7 @@ const Feed = ({ token }: FeedProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        "http://localhost:3000/posts",
+        "https://bailanysta-nu.vercel.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -55,7 +60,7 @@ const Feed = ({ token }: FeedProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        `http://localhost:3000/posts/${postId}/like`,
+        `https://bailanysta-nu.vercel.app/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );

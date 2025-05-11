@@ -14,10 +14,13 @@ const Login = ({ setToken }: LoginProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://bailanysta-nu.vercel.app/login",
+        {
+          username,
+          password,
+        }
+      );
       const token = response.data.token;
       localStorage.setItem("token", token);
       setToken(token);

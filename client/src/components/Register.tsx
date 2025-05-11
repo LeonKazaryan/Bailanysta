@@ -23,16 +23,19 @@ const Register = ({ setToken }: RegisterProps) => {
       return; // Прерываем выполнение, если пароли не совпадают
     }
     try {
-      await axios.post("http://localhost:3000/register", {
+      await axios.post("https://bailanysta-nu.vercel.app/register", {
         username,
         password, // Убрали passwordRepeat из запроса
       });
       //вход в систему сразу после регистрации
-      const response = await axios.post("http://localhost:3000/login", {
-        //response - ответ сервера
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://bailanysta-nu.vercel.app/login",
+        {
+          //response - ответ сервера
+          username,
+          password,
+        }
+      );
       const token = response.data.token; //извлечает токен из ответа
       localStorage.setItem("token", token);
       //хранилище браузера, нужно чтобы сохранять пользователя после перезагрузки

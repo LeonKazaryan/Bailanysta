@@ -23,7 +23,7 @@ const Profile = ({ token }: ProfileProps) => {
   const deletePost = async (postId: number) => {
     if (!token) return;
     try {
-      await axios.delete(`http://localhost:3000/posts/${postId}`, {
+      await axios.delete(`https://bailanysta-nu.vercel.app/posts/${postId}`, {
         headers: { Authorization: token },
       });
 
@@ -39,7 +39,7 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        `http://localhost:3000/posts/${postId}/like`,
+        `https://bailanysta-nu.vercel.app/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
@@ -59,7 +59,7 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        "http://localhost:3000/posts",
+        "https://bailanysta-nu.vercel.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -74,14 +74,17 @@ const Profile = ({ token }: ProfileProps) => {
     const fetchProfile = async () => {
       if (!token) return;
       try {
-        const userResponse = await axios.get("http://localhost:3000/me", {
-          headers: { Authorization: token },
-        });
+        const userResponse = await axios.get(
+          "https://bailanysta-nu.vercel.app/me",
+          {
+            headers: { Authorization: token },
+          }
+        );
         const username = userResponse.data.username;
         setUsername(username);
 
         const postsResponse = await axios.get(
-          `http://localhost:3000/posts/${username}`
+          `https://bailanysta-nu.vercel.app/posts/${username}`
         );
         //тоже реверс чтобы по порядку
         setPosts(postsResponse.data.reverse());
