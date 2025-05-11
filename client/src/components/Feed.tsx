@@ -23,13 +23,13 @@ const Feed = ({ token }: FeedProps) => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await axios.get(
-        "https://bailanysta-nu.vercel.app/posts"
+        "https://bailanysta-production-fb59.up.railway.app/posts"
       );
       //реверс чтобы посты отоборажались в правильном порядке
       setPosts(response.data.reverse());
       if (token) {
         const userResponse = await axios.get(
-          "https://bailanysta-nu.vercel.app/me",
+          "https://bailanysta-production-fb59.up.railway.app/me",
           {
             headers: { Authorization: token },
           }
@@ -45,7 +45,7 @@ const Feed = ({ token }: FeedProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        "https://bailanysta-nu.vercel.app/posts",
+        "https://bailanysta-production-fb59.up.railway.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -60,7 +60,7 @@ const Feed = ({ token }: FeedProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        `https://bailanysta-nu.vercel.app/${postId}/like`,
+        `https://bailanysta-production-fb59.up.railway.app/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );

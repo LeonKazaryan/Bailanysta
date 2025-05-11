@@ -15,7 +15,7 @@ const Login = ({ setToken }: LoginProps) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://bailanysta-nu.vercel.app/login",
+        "https://bailanysta-production-fb59.up.railway.app/login",
         {
           username,
           password,

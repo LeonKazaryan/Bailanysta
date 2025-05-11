@@ -23,9 +23,12 @@ const Profile = ({ token }: ProfileProps) => {
   const deletePost = async (postId: number) => {
     if (!token) return;
     try {
-      await axios.delete(`https://bailanysta-nu.vercel.app/posts/${postId}`, {
-        headers: { Authorization: token },
-      });
+      await axios.delete(
+        `https://bailanysta-production-fb59.up.railway.app/posts/${postId}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
 
       // Обновление постов
       setPosts(posts.filter((post) => post.id !== postId));
@@ -39,7 +42,7 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        `https://bailanysta-nu.vercel.app/posts/${postId}/like`,
+        `https://bailanysta-production-fb59.up.railway.app/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
@@ -59,7 +62,7 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        "https://bailanysta-nu.vercel.app/posts",
+        "https://bailanysta-production-fb59.up.railway.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -75,7 +78,7 @@ const Profile = ({ token }: ProfileProps) => {
       if (!token) return;
       try {
         const userResponse = await axios.get(
-          "https://bailanysta-nu.vercel.app/me",
+          "https://bailanysta-production-fb59.up.railway.app/me",
           {
             headers: { Authorization: token },
           }
@@ -84,7 +87,7 @@ const Profile = ({ token }: ProfileProps) => {
         setUsername(username);
 
         const postsResponse = await axios.get(
-          `https://bailanysta-nu.vercel.app/posts/${username}`
+          `https://bailanysta-production-fb59.up.railway.app/posts/${username}`
         );
         //тоже реверс чтобы по порядку
         setPosts(postsResponse.data.reverse());

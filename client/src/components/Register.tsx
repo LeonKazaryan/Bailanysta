@@ -23,13 +23,16 @@ const Register = ({ setToken }: RegisterProps) => {
       return; // Прерываем выполнение, если пароли не совпадают
     }
     try {
-      await axios.post("https://bailanysta-nu.vercel.app/register", {
-        username,
-        password, // Убрали passwordRepeat из запроса
-      });
+      await axios.post(
+        "https://bailanysta-production-fb59.up.railway.app/register",
+        {
+          username,
+          password, // Убрали passwordRepeat из запроса
+        }
+      );
       //вход в систему сразу после регистрации
       const response = await axios.post(
-        "https://bailanysta-nu.vercel.app/login",
+        "https://bailanysta-production-fb59.up.railway.app/login",
         {
           //response - ответ сервера
           username,
