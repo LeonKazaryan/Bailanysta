@@ -21,7 +21,7 @@ app.use(express.json()); //парсинг запрос в json, преобраз
 connectDB();
 
 // Проверка модели User
-console.log('User model:', User); // Лог для отладки
+// console.log('User model:', User); 
 
 const JWT_SECRET = process.env.JWT_SECRET; 
 
@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 // Регистрация
 app.post('/register', async (req, res) => {
-  console.log('Received register request:', req.body); // Лог для отладки
+  // console.log('Received register request:', req.body); 
   const { username, password } = req.body; //извлекает юзера и пароля из req.body
   if (!username || !password) {
     console.log("Cannot register with empty credentials");
@@ -50,7 +50,7 @@ app.post('/register', async (req, res) => {
 
     const user = new User({ username, password });
     await user.save();
-    console.log("User registered");
+    // console.log("User registered");
     res.status(201).json({ message: 'User registered' });
   } catch (error) {
     console.error('Registration error:', error);
@@ -69,7 +69,7 @@ app.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, username });
+    res.json({ token});
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ message: 'Server error' });
@@ -111,7 +111,7 @@ app.post('/posts/:id/like', authenticateToken, async (req, res) => {
   const postId = req.params.id;
   const username = req.user.username;
 
-  console.log(`User ${username} toggling like for post ${postId}`);
+  // console.log(`User ${username} toggling like for post ${postId}`);
 
   // Проверка, что postId передан и валиден
   if (!postId || postId === 'undefined') {
@@ -151,7 +151,7 @@ app.delete('/posts/:id', authenticateToken, async (req, res) => {
   const postId = req.params.id;
   const username = req.user.username;
 
-  console.log(`Deleting post ${postId} by user ${username}`); 
+  // console.log(`Deleting post ${postId} by user ${username}`); 
 
   // Находим индекс поста
   const post = await Post.findById(postId);

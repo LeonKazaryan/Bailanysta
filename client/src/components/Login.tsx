@@ -22,7 +22,7 @@ const Login = ({ setToken }: LoginProps) => {
         username,
         password,
       });
-      const { token, username: returnedUsername } = response.data;
+      const token = response.data.token;
       localStorage.setItem("token", token);
       setToken(token);
       navigate("/profile");

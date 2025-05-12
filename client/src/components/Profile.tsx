@@ -4,7 +4,7 @@ import styles from "./Profile.module.css";
 import { API_URL } from "../config";
 
 interface Post {
-  _id: string; // Изменено с id: number на _id: string
+  _id: string;
   username: string;
   content: string;
   createdAt: string;
@@ -22,7 +22,6 @@ const Profile = ({ token }: ProfileProps) => {
   const [content, setContent] = useState("");
 
   const deletePost = async (postId: string) => {
-    // Изменено: number → string
     if (!token) return;
     try {
       await axios.delete(`${API_URL}/posts/${postId}`, {
@@ -30,7 +29,7 @@ const Profile = ({ token }: ProfileProps) => {
       });
 
       // Обновление постов
-      setPosts(posts.filter((post) => post._id !== postId)); // Изменено: post.id → post._id
+      setPosts(posts.filter((post) => post._id !== postId));
     } catch (err) {
       console.error("Failed to delete post:", err);
       alert("Failed to delete post");
@@ -38,19 +37,18 @@ const Profile = ({ token }: ProfileProps) => {
   };
 
   const toggleLike = async (postId: string) => {
-    // Изменено: number → string
     if (!token) return;
     try {
-      console.log("Sending like request for postId:", postId); // Лог для отладки
+      // console.log("Sending like request for postId:", postId);
       const response = await axios.post(
-        `${API_URL}/posts/${postId}/like`, // Исправлено: добавлено /posts/
+        `${API_URL}/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
       const { likes, likedBy } = response.data;
       setPosts(
-        posts.map(
-          (post) => (post._id === postId ? { ...post, likes, likedBy } : post) // Изменено: post.id → post._id
+        posts.map((post) =>
+          post._id === postId ? { ...post, likes, likedBy } : post
         )
       );
     } catch (err: any) {
@@ -114,12 +112,12 @@ const Profile = ({ token }: ProfileProps) => {
         {posts.map((post) => (
           <div key={post._id} className={styles.post}>
             {" "}
-            {/* Изменено: key={post._id} */}
+            {}
             <p>{new Date(post.createdAt).toLocaleString()}</p>
             <p>{post.content}</p>
             <div className={styles.likes}>
               <button
-                onClick={() => toggleLike(post._id)} // Изменено: post._id
+                onClick={() => toggleLike(post._id)}
                 style={{
                   color: post.likedBy.includes(username) ? "red" : "black",
                 }}
@@ -138,8 +136,7 @@ const Profile = ({ token }: ProfileProps) => {
                 )}
               </div>
             </div>
-            <button onClick={() => deletePost(post._id)}>delete</button>{" "}
-            {/* Изменено: post._id */}
+            <button onClick={() => deletePost(post._id)}>delete</button> {}
           </div>
         ))}
       </div>

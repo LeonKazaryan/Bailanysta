@@ -1,7 +1,7 @@
 import { useState } from "react"; //для динамического изменения компонента
 import axios from "axios";
 import styles from "./Form.module.css";
-import { useNavigate } from "react-router-dom"; // Импортируем useNavigate для перенаправления
+import { useNavigate } from "react-router-dom"; // useNavigate для перенаправления
 import { API_URL } from "../config";
 
 interface RegisterProps {

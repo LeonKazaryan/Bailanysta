@@ -4,7 +4,7 @@ import styles from "./Feed.module.css";
 import { API_URL } from "../config";
 
 interface Post {
-  _id: string; // Изменено с id: number на _id: string
+  _id: string;
   username: string;
   content: string;
   createdAt: string;
@@ -61,7 +61,7 @@ const Feed = ({ token }: FeedProps) => {
     try {
       console.log("Sending like request for postId:", postId); // Лог для отладки
       const response = await axios.post(
-        `${API_URL}/posts/${postId}/like`, // Исправлено: добавлено /posts/
+        `${API_URL}/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
@@ -97,7 +97,7 @@ const Feed = ({ token }: FeedProps) => {
           posts.map((post) => (
             <div key={post._id} className={styles.post}>
               {" "}
-              {/* key={post._id} */}
+              {}
               <p>
                 <strong>{post.username}</strong> -{" "}
                 {new Date(post.createdAt).toLocaleString()}
