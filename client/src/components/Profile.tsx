@@ -4,7 +4,7 @@ import styles from "./Profile.module.css";
 import { API_URL } from "../config";
 
 interface Post {
-  id: number;
+  _id: string; // Изменено с id: number на _id: string
   username: string;
   content: string;
   createdAt: string;
@@ -21,7 +21,8 @@ const Profile = ({ token }: ProfileProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [content, setContent] = useState("");
 
-  const deletePost = async (postId: number) => {
+  const deletePost = async (postId: string) => {
+    // Изменено: number → string
     if (!token) return;
     try {
       await axios.delete(`${API_URL}/posts/${postId}`, {
@@ -29,25 +30,27 @@ const Profile = ({ token }: ProfileProps) => {
       });
 
       // Обновление постов
-      setPosts(posts.filter((post) => post.id !== postId));
+      setPosts(posts.filter((post) => post._id !== postId)); // Изменено: post.id → post._id
     } catch (err) {
       console.error("Failed to delete post:", err);
       alert("Failed to delete post");
     }
   };
 
-  const toggleLike = async (postId: number) => {
+  const toggleLike = async (postId: string) => {
+    // Изменено: number → string
     if (!token) return;
     try {
+      console.log("Sending like request for postId:", postId); // Лог для отладки
       const response = await axios.post(
-        `${API_URL}/posts/${postId}/like`,
+        `${API_URL}/posts/${postId}/like`, // Исправлено: добавлено /posts/
         {},
         { headers: { Authorization: token } }
       );
       const { likes, likedBy } = response.data;
       setPosts(
-        posts.map((post) =>
-          post.id === postId ? { ...post, likes, likedBy } : post
+        posts.map(
+          (post) => (post._id === postId ? { ...post, likes, likedBy } : post) // Изменено: post.id → post._id
         )
       );
     } catch (err: any) {
@@ -82,8 +85,7 @@ const Profile = ({ token }: ProfileProps) => {
         setUsername(username);
 
         const postsResponse = await axios.get(`${API_URL}/posts/${username}`);
-        //тоже реверс чтобы по порядку
-        setPosts(postsResponse.data.reverse());
+        setPosts(postsResponse.data);
       } catch (err) {
         console.error("Failed to fetch profile");
       }
@@ -110,13 +112,14 @@ const Profile = ({ token }: ProfileProps) => {
 
       <div className={styles.posts}>
         {posts.map((post) => (
-          <div key={post.id} className={styles.post}>
+          <div key={post._id} className={styles.post}>
+            {" "}
+            {/* Изменено: key={post._id} */}
             <p>{new Date(post.createdAt).toLocaleString()}</p>
             <p>{post.content}</p>
-
             <div className={styles.likes}>
               <button
-                onClick={() => toggleLike(post.id)}
+                onClick={() => toggleLike(post._id)} // Изменено: post._id
                 style={{
                   color: post.likedBy.includes(username) ? "red" : "black",
                 }}
@@ -135,8 +138,8 @@ const Profile = ({ token }: ProfileProps) => {
                 )}
               </div>
             </div>
-
-            <button onClick={() => deletePost(post.id)}>delete</button>
+            <button onClick={() => deletePost(post._id)}>delete</button>{" "}
+            {/* Изменено: post._id */}
           </div>
         ))}
       </div>

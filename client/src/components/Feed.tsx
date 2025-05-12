@@ -4,7 +4,7 @@ import styles from "./Feed.module.css";
 import { API_URL } from "../config";
 
 interface Post {
-  id: number;
+  _id: string; // Изменено с id: number на _id: string
   username: string;
   content: string;
   createdAt: string;
@@ -23,18 +23,22 @@ const Feed = ({ token }: FeedProps) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get(`${API_URL}/posts`);
-      //реверс чтобы посты отоборажались в правильном порядке
-      setPosts(response.data.reverse());
-      if (token) {
-        const userResponse = await axios.get(`${API_URL}/me`, {
-          headers: { Authorization: token },
-        });
-        setUsername(userResponse.data.username);
+      try {
+        const response = await axios.get(`${API_URL}/posts`);
+
+        setPosts(response.data);
+        if (token) {
+          const userResponse = await axios.get(`${API_URL}/me`, {
+            headers: { Authorization: token },
+          });
+          setUsername(userResponse.data.username);
+        }
+      } catch (err) {
+        console.error("Failed to fetch posts:", err);
       }
     };
     fetchPosts();
-  }, []);
+  }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,18 +56,19 @@ const Feed = ({ token }: FeedProps) => {
     }
   };
 
-  const toggleLike = async (postId: number) => {
+  const toggleLike = async (postId: string) => {
     if (!token) return;
     try {
+      console.log("Sending like request for postId:", postId); // Лог для отладки
       const response = await axios.post(
-        `${API_URL}/${postId}/like`,
+        `${API_URL}/posts/${postId}/like`, // Исправлено: добавлено /posts/
         {},
         { headers: { Authorization: token } }
       );
       const { likes, likedBy } = response.data;
       setPosts(
         posts.map((post) =>
-          post.id === postId ? { ...post, likes, likedBy } : post
+          post._id === postId ? { ...post, likes, likedBy } : post
         )
       );
     } catch (err: any) {
@@ -90,7 +95,9 @@ const Feed = ({ token }: FeedProps) => {
           <p className={styles.noPosts}>No posts yet</p>
         ) : (
           posts.map((post) => (
-            <div key={post.id} className={styles.post}>
+            <div key={post._id} className={styles.post}>
+              {" "}
+              {/* key={post._id} */}
               <p>
                 <strong>{post.username}</strong> -{" "}
                 {new Date(post.createdAt).toLocaleString()}
@@ -99,7 +106,7 @@ const Feed = ({ token }: FeedProps) => {
               <div className={styles.likes}>
                 {token && (
                   <button
-                    onClick={() => toggleLike(post.id)}
+                    onClick={() => toggleLike(post._id)}
                     style={{
                       color: post.likedBy.includes(username) ? "red" : "black",
                     }}
