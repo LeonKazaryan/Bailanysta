@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "./Form.module.css";
 import { API_URL } from "../config";
+import { useNavigate } from "react-router-dom"; // useNavigate для перенаправления
 
 interface LoginProps {
   setToken: (token: string) => void;
@@ -11,17 +12,20 @@ const Login = ({ setToken }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(""); //сбросить ошибку
     try {
       const response = await axios.post(`${API_URL}/login`, {
         username,
         password,
       });
-      const token = response.data.token;
+      const { token, username: returnedUsername } = response.data;
       localStorage.setItem("token", token);
       setToken(token);
+      navigate("/profile");
     } catch (err) {
       setError("Wrong password or username");
     }
