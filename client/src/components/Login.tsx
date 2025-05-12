@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./Form.module.css";
+import { API_URL } from "../config";
 
 interface LoginProps {
   setToken: (token: string) => void;
@@ -15,7 +16,8 @@ const Login = ({ setToken }: LoginProps) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://bailanysta-production-fb59.up.railway.app/login",
+        `${API_URL}/login`,
+        // "https://bailanysta-production-fb59.up.railway.app/login",
         {
           username,
           password,

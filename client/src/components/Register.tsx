@@ -2,6 +2,7 @@ import { useState } from "react"; //для динамического измен
 import axios from "axios";
 import styles from "./Form.module.css";
 import { useNavigate } from "react-router-dom"; // Импортируем useNavigate для перенаправления
+import { API_URL } from "../config";
 
 interface RegisterProps {
   setToken: (token: string) => void;
@@ -24,7 +25,9 @@ const Register = ({ setToken }: RegisterProps) => {
     }
     try {
       await axios.post(
-        "https://bailanysta-production-fb59.up.railway.app/register",
+        `${API_URL}/register`,
+        // "https://bailanysta-production-fb59.up.railway.app/register",
+        //"https://localhost:3000/register",
         {
           username,
           password, // Убрали passwordRepeat из запроса
@@ -32,7 +35,9 @@ const Register = ({ setToken }: RegisterProps) => {
       );
       //вход в систему сразу после регистрации
       const response = await axios.post(
-        "https://bailanysta-production-fb59.up.railway.app/login",
+        // "https://bailanysta-production-fb59.up.railway.app/login",
+        // "https://localhost:3000/login",
+        `${API_URL}/login`,
         {
           //response - ответ сервера
           username,

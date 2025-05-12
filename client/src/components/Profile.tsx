@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Profile.module.css";
+import { API_URL } from "../config";
 
 interface Post {
   id: number;
@@ -24,7 +25,9 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       await axios.delete(
-        `https://bailanysta-production-fb59.up.railway.app/posts/${postId}`,
+        `${API_URL}/posts/${postId}`,
+
+        // `https://bailanysta-production-fb59.up.railway.app/posts/${postId}`,
         {
           headers: { Authorization: token },
         }
@@ -42,7 +45,9 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        `https://bailanysta-production-fb59.up.railway.app/posts/${postId}/like`,
+        `${API_URL}/posts/${postId}/like`,
+
+        // `https://bailanysta-production-fb59.up.railway.app/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
@@ -62,7 +67,8 @@ const Profile = ({ token }: ProfileProps) => {
     if (!token) return;
     try {
       const response = await axios.post(
-        "https://bailanysta-production-fb59.up.railway.app/posts",
+        `${API_URL}/posts`,
+        // "https://bailanysta-production-fb59.up.railway.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -78,7 +84,8 @@ const Profile = ({ token }: ProfileProps) => {
       if (!token) return;
       try {
         const userResponse = await axios.get(
-          "https://bailanysta-production-fb59.up.railway.app/me",
+          `${API_URL}/me`,
+          // "https://bailanysta-production-fb59.up.railway.app/me",
           {
             headers: { Authorization: token },
           }
@@ -87,7 +94,9 @@ const Profile = ({ token }: ProfileProps) => {
         setUsername(username);
 
         const postsResponse = await axios.get(
-          `https://bailanysta-production-fb59.up.railway.app/posts/${username}`
+          `${API_URL}/posts/${username}`
+
+          // `https://bailanysta-production-fb59.up.railway.app/posts/${username}`
         );
         //тоже реверс чтобы по порядку
         setPosts(postsResponse.data.reverse());
