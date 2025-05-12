@@ -11,3 +11,7 @@ commit 1.10:
 -имплементировал MongoDB, добавлены соотвесвующие файлы, убран хардкодинг с храненим данных напрямую в массиве в коде
 -исправлена ошибка с неправильным порядком вывода постов
 -сайт теперь работает на vercel 'https://bailanysta-mu.vercel.app/'
+
+commit 1.11:
+-Бэкэнд (server) выгружен на Render
+-API_URL теперь 'https://bailanysta-s2if.onrender.com' вместо localhost
