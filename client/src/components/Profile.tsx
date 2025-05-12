@@ -24,14 +24,9 @@ const Profile = ({ token }: ProfileProps) => {
   const deletePost = async (postId: number) => {
     if (!token) return;
     try {
-      await axios.delete(
-        `${API_URL}/posts/${postId}`,
-
-        // `https://bailanysta-production-fb59.up.railway.app/posts/${postId}`,
-        {
-          headers: { Authorization: token },
-        }
-      );
+      await axios.delete(`${API_URL}/posts/${postId}`, {
+        headers: { Authorization: token },
+      });
 
       // Обновление постов
       setPosts(posts.filter((post) => post.id !== postId));
@@ -46,8 +41,6 @@ const Profile = ({ token }: ProfileProps) => {
     try {
       const response = await axios.post(
         `${API_URL}/posts/${postId}/like`,
-
-        // `https://bailanysta-production-fb59.up.railway.app/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );
@@ -68,7 +61,6 @@ const Profile = ({ token }: ProfileProps) => {
     try {
       const response = await axios.post(
         `${API_URL}/posts`,
-        // "https://bailanysta-production-fb59.up.railway.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -83,21 +75,13 @@ const Profile = ({ token }: ProfileProps) => {
     const fetchProfile = async () => {
       if (!token) return;
       try {
-        const userResponse = await axios.get(
-          `${API_URL}/me`,
-          // "https://bailanysta-production-fb59.up.railway.app/me",
-          {
-            headers: { Authorization: token },
-          }
-        );
+        const userResponse = await axios.get(`${API_URL}/me`, {
+          headers: { Authorization: token },
+        });
         const username = userResponse.data.username;
         setUsername(username);
 
-        const postsResponse = await axios.get(
-          `${API_URL}/posts/${username}`
-
-          // `https://bailanysta-production-fb59.up.railway.app/posts/${username}`
-        );
+        const postsResponse = await axios.get(`${API_URL}/posts/${username}`);
         //тоже реверс чтобы по порядку
         setPosts(postsResponse.data.reverse());
       } catch (err) {

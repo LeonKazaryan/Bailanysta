@@ -23,21 +23,13 @@ const Feed = ({ token }: FeedProps) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get(
-        `${API_URL}/posts`
-
-        // "https://bailanysta-production-fb59.up.railway.app/posts"
-      );
+      const response = await axios.get(`${API_URL}/posts`);
       //реверс чтобы посты отоборажались в правильном порядке
       setPosts(response.data.reverse());
       if (token) {
-        const userResponse = await axios.get(
-          `${API_URL}/me`,
-          // "https://bailanysta-production-fb59.up.railway.app/me",
-          {
-            headers: { Authorization: token },
-          }
-        );
+        const userResponse = await axios.get(`${API_URL}/me`, {
+          headers: { Authorization: token },
+        });
         setUsername(userResponse.data.username);
       }
     };
@@ -50,7 +42,6 @@ const Feed = ({ token }: FeedProps) => {
     try {
       const response = await axios.post(
         `${API_URL}/posts`,
-        // "https://bailanysta-production-fb59.up.railway.app/posts",
         { content },
         { headers: { Authorization: token } }
       );
@@ -66,8 +57,6 @@ const Feed = ({ token }: FeedProps) => {
     try {
       const response = await axios.post(
         `${API_URL}/${postId}/like`,
-
-        // `https://bailanysta-production-fb59.up.railway.app/${postId}/like`,
         {},
         { headers: { Authorization: token } }
       );

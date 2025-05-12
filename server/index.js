@@ -26,18 +26,18 @@ app.get('/', (req, res) => {
 
 // Регистрация
 app.post('/register', (req, res) => {
-  const { username, password, passwordRepeat } = req.body; //извлекает юзера и пароля из req.body
+  const { username, password} = req.body; //извлекает юзера и пароля из req.body
   if(!username || !password){
+    console.log("Cannot register with empty credentials");
     return res.status(402).json({message: 'Cannot register with empty credentials'})
   }
 
-  if(password !== passwordRepeat){
-    return res.status(402).json({message: 'Password does not match!'})
-  }
   if (users.find(u => u.username === username)) { 
+    console.log("User already exists");
     return res.status(400).json({ message: 'User already exists' }); 
   }
   users.push({ username, password });
+  console.log("User registered")
   res.status(201).json({ message: 'User registered' });
 });
 

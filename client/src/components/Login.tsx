@@ -15,14 +15,10 @@ const Login = ({ setToken }: LoginProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${API_URL}/login`,
-        // "https://bailanysta-production-fb59.up.railway.app/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/login`, {
+        username,
+        password,
+      });
       const token = response.data.token;
       localStorage.setItem("token", token);
       setToken(token);

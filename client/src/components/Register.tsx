@@ -24,26 +24,16 @@ const Register = ({ setToken }: RegisterProps) => {
       return; // Прерываем выполнение, если пароли не совпадают
     }
     try {
-      await axios.post(
-        `${API_URL}/register`,
-        // "https://bailanysta-production-fb59.up.railway.app/register",
-        //"https://localhost:3000/register",
-        {
-          username,
-          password, // Убрали passwordRepeat из запроса
-        }
-      );
+      await axios.post(`${API_URL}/register`, {
+        username,
+        password,
+      });
       //вход в систему сразу после регистрации
-      const response = await axios.post(
-        // "https://bailanysta-production-fb59.up.railway.app/login",
-        // "https://localhost:3000/login",
-        `${API_URL}/login`,
-        {
-          //response - ответ сервера
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/login`, {
+        //response - ответ сервера
+        username,
+        password,
+      });
       const token = response.data.token; //извлечает токен из ответа
       localStorage.setItem("token", token);
       //хранилище браузера, нужно чтобы сохранять пользователя после перезагрузки
