@@ -15,3 +15,6 @@ commit 1.10:
 commit 1.11:
 -Бэкэнд (server) выгружен на Render
 -API_URL теперь 'https://bailanysta-s2if.onrender.com' вместо localhost
+
+commit 1.12:
+-добавил переход после логина на страницу profile
